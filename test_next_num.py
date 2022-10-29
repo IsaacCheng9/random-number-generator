@@ -37,6 +37,15 @@ class TestInputValidation:
             decimal.Decimal("1.0"),
         ]
 
+    def test_input_validation_random_nums_not_int(self):
+        """
+        Check that random_nums must be a list of integers.
+        """
+        random_nums = [-1, 0, 1, 2, 3.1]
+        probabilities = [0.01, 0.3, 0.58, 0.1, 0.01]
+        with pytest.raises(TypeError):
+            next_num.RandomGen(random_nums, probabilities)
+
     def test_input_validation_length_mismatch(self):
         """
         Check that the length of random_nums and probabilities must be equal.
