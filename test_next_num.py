@@ -10,6 +10,10 @@ import next_num
 
 
 class TestInputValidation:
+    """
+    Check that valid and invalid inputs are handled correctly.
+    """
+
     def test_input_validation(self):
         random_nums = [-1, 0, 1, 2, 3]
         probabilities = [0.01, 0.3, 0.58, 0.1, 0.01]
@@ -50,6 +54,10 @@ class TestInputValidation:
 
 
 class TestNextNum:
+    """
+    Check that the random number generator provides valid outputs.
+    """
+
     def test_returns_values_from_number_list(self):
         random_nums = [1, 2, 3, 4, 5, 6]
         probabilities = [0.1, 0.2, 0.3, 0.2, 0.1, 0.1]
