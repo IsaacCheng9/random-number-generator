@@ -15,6 +15,9 @@ class TestInputValidation:
     """
 
     def test_input_validation(self):
+        """
+        Check that valid inputs pass validation tests and are parsed properly.
+        """
         random_nums = [-1, 0, 1, 2, 3]
         probabilities = [0.01, 0.3, 0.58, 0.1, 0.01]
         random_gen = next_num.RandomGen(random_nums, probabilities)
@@ -35,18 +38,27 @@ class TestInputValidation:
         ]
 
     def test_input_validation_length_mismatch(self):
+        """
+        Check that the length of random_nums and probabilities must be equal.
+        """
         random_nums = [-1, 0, 1, 2, 3]
         probabilities = [0.01, 0.3, 0.58, 0.1]
         with pytest.raises(ValueError):
             next_num.RandomGen(random_nums, probabilities)
 
     def test_input_validation_negative_probability(self):
+        """
+        Check that probabilities must be non-negative.
+        """
         random_nums = [-1, 0, 1, 2, 3]
         probabilities = [0.01, 0.3, 0.58, 0.1, -0.01]
         with pytest.raises(ValueError):
             next_num.RandomGen(random_nums, probabilities)
 
     def test_input_validation_probability_sum_not_one(self):
+        """
+        Check that probabilities must sum to 1.
+        """
         random_nums = [-1, 0, 1, 2, 3]
         probabilities = [0.01, 0.3, 0.58, 0.1, 0.02]
         with pytest.raises(ValueError):
@@ -59,10 +71,12 @@ class TestNextNum:
     """
 
     def test_find_corresponding_index_of_random_number(self):
+        """
+        Check the boundary between ranges for the first and second numbers.
+        """
         random_nums = [1, 2, 3]
         probabilities = [0.1, 0.2, 0.7]
         random_gen = next_num.RandomGen(random_nums, probabilities)
-        # Test the boundary between ranges for the first and second numbers.
         assert (
             random_gen.find_corresponding_index_of_random_number(
                 random_gen._cum_probabilities, 0.09999999999999999
@@ -77,6 +91,9 @@ class TestNextNum:
         )
 
     def test_returns_values_from_number_list(self):
+        """
+        Check that the number generator only returns integers from the list.
+        """
         random_nums = [1, 2, 3, 4, 5, 6]
         probabilities = [0.1, 0.2, 0.3, 0.2, 0.1, 0.1]
         random_gen = next_num.RandomGen(random_nums, probabilities)
