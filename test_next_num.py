@@ -47,3 +47,13 @@ class TestInputValidation:
         probabilities = [0.01, 0.3, 0.58, 0.1, 0.02]
         with pytest.raises(ValueError):
             next_num.RandomGen(random_nums, probabilities)
+
+
+class TestNextNum:
+    def test_returns_values_from_number_list(self):
+        random_nums = [1, 2, 3, 4, 5, 6]
+        probabilities = [0.1, 0.2, 0.3, 0.2, 0.1, 0.1]
+        random_gen = next_num.RandomGen(random_nums, probabilities)
+        iterations = 10000
+        for _ in range(iterations):
+            assert random_gen.next_num() in random_nums
