@@ -89,4 +89,4 @@ if __name__ == "__main__":
         "(Proportion)]"
     )
     for num in random_nums:
-        print(f"{num}: {num_counts[num]} ({num_counts[num] / iterations})")
+        print(f"{num}: {num_counts[num]} times ({num_counts[num] / iterations})")
