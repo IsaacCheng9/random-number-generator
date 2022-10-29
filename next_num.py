@@ -1,7 +1,6 @@
 import bisect
 import collections
 import decimal
-import numpy
 import random
 
 
@@ -14,22 +13,28 @@ class RandomGen(object):
         # Probability of the occurence of each value in _random_nums. Convert
         # these to decimal floating point arithmetic for precision.
         # Example: [0.01, 0.3, 0.58, 0.1, 0.01]
-        self._probabilities = probabilities
-        # TODO: Fix the conversion to decimal floating point arithmetic.
-        # probabilities = list(str(probability) for probability in probabilities)
-        # self._probabilities = list(map(decimal.Decimal, probabilities))
+        # Convert probabilities into decimal floating point arithmetic for
+        # precision to prevent floating point arithmetic errors.
+        probabilities = list(str(probability) for probability in probabilities)
+        self._probabilities = list(map(decimal.Decimal, probabilities))
 
-        # Use numpy's cumsum() as it's optimised for speed.
-        self._cum_probabilities = list(numpy.cumsum(probabilities))
+        # Calculate the cumulative probabilities to find the range that each
+        # number falls into when generating a random number.
+        self._cum_probabilities = []
+        cumulative = decimal.Decimal(0.00)
+        for probability in self._probabilities:
+            cumulative += probability
+            self._cum_probabilities.append(cumulative)
 
+        # TODO: Consider adding a flag for these checks.
         if len(self._random_nums) != len(self._probabilities):
             raise ValueError("Length of random_nums and probabilities must be equal.")
 
         if any(probability < 0.0 for probability in self._probabilities):
             raise ValueError("Probabilities must be non-negative.")
 
-        # if sum(self._probabilities) != 1.0:
-        #     raise ValueError("Probabilities must sum to 1.")
+        if self._cum_probabilities[-1] != 1.0:
+            raise ValueError("Probabilities must sum to 1.")
 
     def find_cumulative_probability_index(
         self, cumulative_probabilities: list, random_roll: float
@@ -69,7 +74,17 @@ if __name__ == "__main__":
     probabilities = [0.01, 0.3, 0.58, 0.1, 0.01]
     random_gen = RandomGen(random_nums, probabilities)
     num_counts = collections.defaultdict(int)
-    for _ in range(10000):
+    # Set how many numbers to generate - a larger sample size will generally
+    # converge to the expected probabilities.
+    iterations = 10000
+    for _ in range(iterations):
         num_counts[random_gen.next_num()] += 1
 
-    print(num_counts.items())
+    # Print the results of the tests.
+    print(f"Numbers: {random_nums}")
+    print(
+        f"Probabilities: {probabilities}\n\nNumbers Generated [Number: Frequency "
+        "(Proportion)]"
+    )
+    for num in random_nums:
+        print(f"{num}: {num_counts[num]} ({num_counts[num] / iterations})")
