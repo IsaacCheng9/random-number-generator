@@ -58,6 +58,24 @@ class TestNextNum:
     Check that the random number generator provides valid outputs.
     """
 
+    def test_find_corresponding_index_of_random_number(self):
+        random_nums = [1, 2, 3]
+        probabilities = [0.1, 0.2, 0.7]
+        random_gen = next_num.RandomGen(random_nums, probabilities)
+        # Test the boundary between ranges for the first and second numbers.
+        assert (
+            random_gen.find_corresponding_index_of_random_number(
+                random_gen._cum_probabilities, 0.09999999999999999
+            )
+            == 0
+        )
+        assert (
+            random_gen.find_corresponding_index_of_random_number(
+                random_gen._cum_probabilities, 0.1
+            )
+            == 1
+        )
+
     def test_returns_values_from_number_list(self):
         random_nums = [1, 2, 3, 4, 5, 6]
         probabilities = [0.1, 0.2, 0.3, 0.2, 0.1, 0.1]
