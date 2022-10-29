@@ -29,6 +29,9 @@ class RandomGen(object):
             cumulative += probability
             self._cum_probabilities.append(cumulative)
 
+        if any(type(num) != int for num in self._random_nums):
+            raise TypeError("random_nums must be a list of integers.")
+
         if len(self._random_nums) != len(self._probabilities):
             raise ValueError("Length of random_nums and probabilities must be equal.")
 
