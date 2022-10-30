@@ -94,6 +94,7 @@ class TestNextNum:
             )
             == 0
         )
+        # TODO: Look into whether this is actually the upper bound.
         # Check that it returns the last index for the highest possible roll.
         assert (
             random_gen.find_index_of_number_for_random_roll(
@@ -110,6 +111,7 @@ class TestNextNum:
         random_nums = [1, 2, 3]
         probabilities = [0.1, 0.2, 0.7]
         random_gen = next_num.RandomGen(random_nums, probabilities)
+        # TODO: Look into whether this is actually the upper bound.
         # Check that the first index is returned for a roll at the upper
         # boundary of the first range.
         assert (
