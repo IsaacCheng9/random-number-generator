@@ -29,17 +29,18 @@ class RandomGen(object):
             cumulative += probability
             self._cum_probabilities.append(cumulative)
 
-        if any(type(num) != int for num in self._random_nums):
-            raise TypeError("random_nums must be a list of integers.")
-
+        # !IMPORTANT: Order these checks from fastest to slowest to execute.
         if len(self._random_nums) != len(self._probabilities):
             raise ValueError("Length of random_nums and probabilities must be equal.")
 
-        if any(probability < 0.0 for probability in self._probabilities):
-            raise ValueError("Probabilities must be non-negative.")
-
         if self._cum_probabilities[-1] != 1.0:
             raise ValueError("Probabilities must sum to 1.")
+
+        if any(type(num) != int for num in self._random_nums):
+            raise TypeError("random_nums must be a list of integers.")
+
+        if any(probability < 0.0 for probability in self._probabilities):
+            raise ValueError("Probabilities must be non-negative.")
 
     def find_index_of_number_for_random_roll(
         self, cumulative_probabilities: list, random_roll: float
