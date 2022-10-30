@@ -41,7 +41,7 @@ class RandomGen(object):
         if self._cum_probabilities[-1] != 1.0:
             raise ValueError("Probabilities must sum to 1.")
 
-    def find_corresponding_index_of_random_number(
+    def find_index_of_number_for_random_roll(
         self, cumulative_probabilities: list, random_roll: float
     ) -> int:
         """
@@ -68,7 +68,7 @@ class RandomGen(object):
         random_roll = random.random()
         # Find the index of the number whose probability range this random roll
         # fits into.
-        number_index = self.find_corresponding_index_of_random_number(
+        number_index = self.find_index_of_number_for_random_roll(
             self._cum_probabilities, random_roll
         )
         return self._random_nums[number_index]

@@ -79,21 +79,49 @@ class TestNextNum:
     Check that the random number generator provides valid outputs.
     """
 
-    def test_find_corresponding_index_of_random_number(self):
+    def test_find_index_of_number_for_random_roll_boundaries(self):
         """
-        Check the boundary between ranges for the first and second numbers.
+        Check the boundaries for the number indices when finding the index of a
+        number that a random roll corresponds to.
         """
         random_nums = [1, 2, 3]
         probabilities = [0.1, 0.2, 0.7]
         random_gen = next_num.RandomGen(random_nums, probabilities)
+        # Check that it returns the first index for the lowest possible roll.
         assert (
-            random_gen.find_corresponding_index_of_random_number(
+            random_gen.find_index_of_number_for_random_roll(
+                random_gen._cum_probabilities, 0.00
+            )
+            == 0
+        )
+        # Check that it returns the last index for the highest possible roll.
+        assert (
+            random_gen.find_index_of_number_for_random_roll(
+                random_gen._cum_probabilities, 0.9999999999999999
+            )
+            == 2
+        )
+
+    def test_find_index_of_number_for_random_roll_ranges(self):
+        """
+        Check the ranges for the number indices when finding the index of a
+        number that a random roll corresponds to.
+        """
+        random_nums = [1, 2, 3]
+        probabilities = [0.1, 0.2, 0.7]
+        random_gen = next_num.RandomGen(random_nums, probabilities)
+        # Check that the first index is returned for a roll at the upper
+        # boundary of the first range.
+        assert (
+            random_gen.find_index_of_number_for_random_roll(
                 random_gen._cum_probabilities, 0.09999999999999999
             )
             == 0
         )
+        # Check that the second index is returned for a roll at the lower
+        # boundary of the second range.
         assert (
-            random_gen.find_corresponding_index_of_random_number(
+            random_gen.find_index_of_number_for_random_roll(
                 random_gen._cum_probabilities, 0.1
             )
             == 1
