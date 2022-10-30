@@ -39,6 +39,7 @@ class RandomGen(object):
             cumulative += probability
             self._probabilities.append(probability)
             self._cum_probabilities.append(cumulative)
+
         if self._cum_probabilities[-1] != 1.0:
             raise ValueError("probabilities must sum to 1.")
 
