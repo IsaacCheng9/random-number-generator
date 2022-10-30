@@ -14,33 +14,33 @@ class RandomGen(object):
                 random number generator. Example: [0.01, 0.3, 0.58, 0.1, 0.01]
         """
         # TODO: Consider adding a flag to sacrifice floating point precision for speed (using numpy with ints instead of decimal).
-        self._random_nums = random_nums
+        # !IMPORTANT: Order checks from fastest to slowest to execute.
+        if len(random_nums) != len(probabilities):
+            raise ValueError("Length of random_nums and probabilities must be equal.")
 
-        # Convert probabilities into decimal floating point arithmetic for
-        # precision to prevent floating point arithmetic errors.
-        probabilities = list(str(probability) for probability in probabilities)
-        self._probabilities = list(map(decimal.Decimal, probabilities))
+        if any(type(num) != int for num in random_nums):
+            raise TypeError("random_nums must be a list of integers.")
+        self._random_nums = random_nums
 
         # Calculate the cumulative probabilities to find the range that each
         # number falls into when generating a random number.
+        self._probabilities = []
         self._cum_probabilities = []
         cumulative = decimal.Decimal(0.00)
-        for probability in self._probabilities:
+        for probability in probabilities:
+            if probability < 0:
+                raise ValueError("probabilities must be non-negative.")
+            if type(probability) != float:
+                raise TypeError("probabilities must be a list of floats.")
+
+            # Convert probabilities into decimal floating point arithmetic for
+            # precision to prevent floating point arithmetic errors.
+            probability = decimal.Decimal(str(probability))
             cumulative += probability
+            self._probabilities.append(probability)
             self._cum_probabilities.append(cumulative)
-
-        # !IMPORTANT: Order these checks from fastest to slowest to execute.
-        if len(self._random_nums) != len(self._probabilities):
-            raise ValueError("Length of random_nums and probabilities must be equal.")
-
         if self._cum_probabilities[-1] != 1.0:
-            raise ValueError("Probabilities must sum to 1.")
-
-        if any(type(num) != int for num in self._random_nums):
-            raise TypeError("random_nums must be a list of integers.")
-
-        if any(probability < 0.0 for probability in self._probabilities):
-            raise ValueError("Probabilities must be non-negative.")
+            raise ValueError("probabilities must sum to 1.")
 
     def find_index_of_number_for_random_roll(
         self, cumulative_probabilities: list, random_roll: float
