@@ -60,9 +60,12 @@ class RandomGen(object):
 
     def next_num(self) -> int:
         """
-        Returns one of the randomNums. When this method is called multiple
-        times over a long period, it should return the numbers roughly with the
-        initialized probabilities.
+        Generate a random number based on the probabilities provided.
+
+        Returns:
+            One of the random_nums - when called multiple times over a long
+            period, it should return the numbers roughly with the initialised
+            probabilities.
         """
         # TODO: Look into how this function works.
         random_roll = random.random()
