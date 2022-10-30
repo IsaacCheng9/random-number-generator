@@ -46,6 +46,15 @@ class TestInputValidation:
         with pytest.raises(TypeError):
             next_num.RandomGen(random_nums, probabilities)
 
+    def test_input_validation_probabilities_not_float(self):
+        """
+        Check that probabilities must be a list of floats.
+        """
+        random_nums = [-1, 0, 1, 2, 3]
+        probabilities = [0.01, 0.3, 0.58, 0.1, "0.01"]
+        with pytest.raises(TypeError):
+            next_num.RandomGen(random_nums, probabilities)
+
     def test_input_validation_length_mismatch(self):
         """
         Check that the length of random_nums and probabilities must be equal.
