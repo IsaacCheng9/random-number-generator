@@ -2,10 +2,11 @@ import bisect
 import collections
 import decimal
 import random
+from typing import List
 
 
 class RandomGen(object):
-    def __init__(self, random_nums: list, probabilities: list):
+    def __init__(self, random_nums: List[int], probabilities: List[float]):
         """
         Args:
             random_nums: Integer values that may be returned by the random
@@ -44,7 +45,7 @@ class RandomGen(object):
             raise ValueError("probabilities must sum to 1.")
 
     def find_index_of_number_for_random_roll(
-        self, cumulative_probabilities: list, random_roll: float
+        self, cumulative_probabilities: List[decimal.Decimal], random_roll: float
     ) -> int:
         """
         Find the index of the number corresponding to the random roll.
