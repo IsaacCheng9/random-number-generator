@@ -19,7 +19,7 @@ class RandomGen(object):
         if len(random_nums) != len(probabilities):
             raise ValueError("Length of random_nums and probabilities must be equal.")
 
-        if any(type(num) != int for num in random_nums):
+        if not all(isinstance(num, int) for num in random_nums):
             raise TypeError("random_nums must be a list of integers.")
         self._random_nums = random_nums
 
@@ -31,7 +31,7 @@ class RandomGen(object):
         for probability in probabilities:
             if probability < 0:
                 raise ValueError("probabilities must be non-negative.")
-            if type(probability) != float:
+            if not isinstance(probability, float):
                 raise TypeError("probabilities must be a list of floats.")
 
             # Convert probabilities into decimal floating point arithmetic for
@@ -81,21 +81,21 @@ class RandomGen(object):
 
 
 if __name__ == "__main__":
-    random_nums = [-1, 0, 1, 2, 3]
-    probabilities = [0.01, 0.3, 0.58, 0.1, 0.01]
-    random_gen = RandomGen(random_nums, probabilities)
+    input_random_nums = [-1, 0, 1, 2, 3]
+    input_probabilities = [0.01, 0.3, 0.58, 0.1, 0.01]
+    random_gen = RandomGen(input_random_nums, input_probabilities)
     num_counts = collections.defaultdict(int)
     # Set how many numbers to generate - a larger sample size will generally
     # converge to the expected probabilities due to the law of large numbers.
-    iterations = 10000
-    for _ in range(iterations):
+    ITERATIONS = 10000
+    for _ in range(ITERATIONS):
         num_counts[random_gen.next_num()] += 1
 
     # Print the results of the random number generation.
-    print(f"Numbers: {random_nums}")
+    print(f"Numbers: {input_random_nums}")
     print(
-        f"Probabilities: {probabilities}\n\nNumbers Generated [Number: Frequency "
+        f"Probabilities: {input_probabilities}\n\nNumbers Generated [Number: Frequency "
         "(Proportion)]"
     )
-    for num in random_nums:
-        print(f"{num}: {num_counts[num]} times ({num_counts[num] / iterations})")
+    for num in input_random_nums:
+        print(f"{num}: {num_counts[num]} times ({num_counts[num] / ITERATIONS})")
