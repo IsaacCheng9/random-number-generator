@@ -173,6 +173,28 @@ class TestNextNum:
             random.seed(10)
             assert [random_gen.next_num() for _ in range(iterations)] == expected_res
 
+    def test_returns_different_results_for_different_seeds(self):
+        """
+        Check that the number generator returns different sequences of numbers
+        when the seed is different, as the random function is pseudorandom.
+        """
+        random_nums = [1, 2, 3, 4, 5, 6]
+        probabilities = [0.1, 0.2, 0.3, 0.2, 0.1, 0.1]
+        random_gen = next_num.RandomGen(random_nums, probabilities)
+        iterations = 1000
+
+        # Seed the random number generator and get the expected results to
+        # compare outputs with.
+        random.seed(10)
+        expected_res = [random_gen.next_num() for _ in range(iterations)]
+
+        # Check that the same sequence of numbers is returned when the seed is
+        # different.
+        samples = 100
+        for increment in range(1, samples + 1):
+            random.seed(10 + increment)
+            assert [random_gen.next_num() for _ in range(iterations)] != expected_res
+
 
 if __name__ == "__main__":
     pytest.main()
