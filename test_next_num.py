@@ -149,3 +149,7 @@ class TestNextNum:
         iterations = 10000
         for _ in range(iterations):
             assert random_gen.next_num() in random_nums
+
+
+if __name__ == "__main__":
+    pytest.main()
