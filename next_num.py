@@ -5,7 +5,7 @@ import random
 from typing import List
 
 
-class RandomGen(object):
+class RandomGen():
     """
     A random number generator that returns a random number given a list of
     numbers and their corresponding probabilities of occurring.
@@ -20,7 +20,6 @@ class RandomGen(object):
                 random number generator. Example: [0.01, 0.3, 0.58, 0.1, 0.01]
         """
         # TODO: Consider adding a flag to sacrifice floating point precision for speed (using numpy with ints instead of decimal).
-        # !IMPORTANT: Order checks from fastest to slowest to execute.
         if len(random_nums) != len(probabilities):
             raise ValueError("Length of random_nums and probabilities must be equal.")
 
