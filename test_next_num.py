@@ -1,4 +1,5 @@
 import decimal
+import random
 
 import pytest
 
@@ -149,6 +150,28 @@ class TestNextNum:
         iterations = 10000
         for _ in range(iterations):
             assert random_gen.next_num() in random_nums
+
+    def test_returns_same_results_for_same_seed(self):
+        """
+        Check that the number generator returns the same sequence of numbers
+        when the seed is the same, as the random function is pseudorandom.
+        """
+        random_nums = [1, 2, 3, 4, 5, 6]
+        probabilities = [0.1, 0.2, 0.3, 0.2, 0.1, 0.1]
+        random_gen = next_num.RandomGen(random_nums, probabilities)
+        iterations = 1000
+
+        # Seed the random number generator and get the expected results to
+        # compare outputs with.
+        random.seed(10)
+        expected_res = [random_gen.next_num() for _ in range(iterations)]
+
+        # Check that the same sequence of numbers is returned when the seed is
+        # the same.
+        samples = 100
+        for _ in range(samples):
+            random.seed(10)
+            assert [random_gen.next_num() for _ in range(iterations)] == expected_res
 
 
 if __name__ == "__main__":
