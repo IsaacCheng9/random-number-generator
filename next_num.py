@@ -6,6 +6,11 @@ from typing import List
 
 
 class RandomGen(object):
+    """
+    A random number generator that returns a random number given a list of
+    numbers and their corresponding probabilities of occurring.
+    """
+
     def __init__(self, random_nums: List[int], probabilities: List[float]):
         """
         Args:
