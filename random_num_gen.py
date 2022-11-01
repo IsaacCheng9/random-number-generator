@@ -119,7 +119,7 @@ if __name__ == "__main__":
 
     # Print the parameters and results of the random number generation.
     print(f"Numbers: {input_random_nums}\nProbabilities: {input_probabilities}\n")
-    print("Expected Results:")
+    print("Expected Results [Number: Frequency]:")
     for i, random_num in enumerate(input_random_nums):
         print(f"{random_num}: {int(input_probabilities[i] * ITERATIONS)} times")
     print("\nActual Results [Number: Frequency " "(Proportion)]:")
