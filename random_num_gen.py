@@ -113,7 +113,7 @@ if __name__ == "__main__":
     num_counts = collections.defaultdict(int)
     # Set how many numbers to generate - a larger number of iterations will
     # converge to the expected probabilities due to the law of large numbers.
-    ITERATIONS = 10000
+    ITERATIONS = 100000
     for _ in range(ITERATIONS):
         num_counts[random_gen.next_num()] += 1
 
