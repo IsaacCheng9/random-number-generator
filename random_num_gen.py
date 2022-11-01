@@ -1,3 +1,9 @@
+"""
+An implementation of a random number generator that takes a list of numbers
+and their corresponding probabilities of occurring. When random numbers are
+generated multiple times, the distribution of numbers should converge towards
+the probabilities given due to the law of large numbers.
+"""
 import bisect
 import collections
 import decimal
@@ -8,7 +14,7 @@ from typing import List
 class RandomGen:
     """
     A random number generator that returns a random number given a list of
-    numbers and their corresponding probabilities of occurring.
+    integers and their corresponding float probabilities of occurring.
     """
 
     def __init__(self, random_nums: List[int], probabilities: List[float]):
@@ -87,7 +93,7 @@ if __name__ == "__main__":
     input_probabilities = [0.01, 0.3, 0.58, 0.1, 0.01]
     random_gen = RandomGen(input_random_nums, input_probabilities)
     num_counts = collections.defaultdict(int)
-    # Set how many numbers to generate - a larger sample size will generally
+    # Set how many numbers to generate - a larger number of iterations will
     # converge to the expected probabilities due to the law of large numbers.
     ITERATIONS = 10000
     for _ in range(ITERATIONS):
