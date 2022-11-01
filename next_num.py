@@ -25,12 +25,12 @@ class RandomGen:
 
         if not all(isinstance(num, int) for num in random_nums):
             raise TypeError("random_nums must be a list of integers.")
-        self._random_nums = random_nums
+        self.random_nums = random_nums
 
         # Calculate the cumulative probabilities to find the range that each
         # number falls into when generating a random number.
-        self._probabilities = []
-        self._cum_probabilities = []
+        self.probabilities = []
+        self.cum_probabilities = []
         cumulative = decimal.Decimal(0.00)
         for probability in probabilities:
             if probability < 0:
@@ -42,10 +42,10 @@ class RandomGen:
             # precision to prevent floating point arithmetic errors.
             probability = decimal.Decimal(str(probability))
             cumulative += probability
-            self._probabilities.append(probability)
-            self._cum_probabilities.append(cumulative)
+            self.probabilities.append(probability)
+            self.cum_probabilities.append(cumulative)
 
-        if self._cum_probabilities[-1] != 1.0:
+        if self.cum_probabilities[-1] != 1.0:
             raise ValueError("probabilities must sum to 1.")
 
     def find_index_of_number_for_random_roll(
@@ -79,9 +79,9 @@ class RandomGen:
         # Find the index of the number whose probability range this random roll
         # fits into.
         number_index = self.find_index_of_number_for_random_roll(
-            self._cum_probabilities, random_roll
+            self.cum_probabilities, random_roll
         )
-        return self._random_nums[number_index]
+        return self.random_nums[number_index]
 
 
 if __name__ == "__main__":
