@@ -11,21 +11,22 @@ import random
 from typing import List
 
 
-def find_index_of_number_for_random_roll(
-    cumulative_probabilities: List[decimal.Decimal], random_roll: float
+def find_cumulative_probability_index_of_float(
+    cumulative_probabilities: List[decimal.Decimal], probability_float: float
 ) -> int:
     """
-    Find the index of the number corresponding to the random roll.
+    Find the index of the cumulative probability corresponding to the
+    probability float.
 
     Args:
         cumulative_probabilities: List of cumulative probabilities.
-        random_roll: Random float between 0 and 1 inclusive.
+        probability_float: Probability between 0 and 1 inclusive.
 
     Returns:
-        Index of the number corresponding to the random roll.
+        The index corresponding to the cumulative probability float.
     """
-    # Find the insertion point for random_roll in cumulative_probabilities.
-    index = bisect.bisect(cumulative_probabilities, random_roll)
+    # Find the insertion point for random_float in cumulative_probabilities.
+    index = bisect.bisect(cumulative_probabilities, probability_float)
     return index
 
 
@@ -83,7 +84,7 @@ class RandomGen:
         random_roll = random.random()
         # Find the index of the number whose probability range this random roll
         # fits into.
-        number_index = find_index_of_number_for_random_roll(
+        number_index = find_cumulative_probability_index_of_float(
             self.cum_probabilities, random_roll
         )
         return self.random_nums[number_index]
