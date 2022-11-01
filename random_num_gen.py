@@ -30,11 +30,23 @@ def find_cumulative_probability_index_of_float(
     return index
 
 
+class RandomNumbers:
+    def __set__(self, obj, value):
+        if not all(isinstance(num, int) for num in value):
+            raise TypeError("All random numbers must be integers.")
+        self.value = value
+
+    def __get__(self, obj, objtype=None):
+        return self.value
+
+
 class RandomGen:
     """
     A random number generator that returns a random number given a list of
     integers and their corresponding float probabilities of occurring.
     """
+
+    random_nums = RandomNumbers()
 
     def __init__(self, random_nums: List[int], probabilities: List[float]):
         """
@@ -47,8 +59,6 @@ class RandomGen:
         if len(random_nums) != len(probabilities):
             raise ValueError("Length of random_nums and probabilities must be equal.")
 
-        if not all(isinstance(num, int) for num in random_nums):
-            raise TypeError("random_nums must be a list of integers.")
         self.random_nums = random_nums
 
         # Calculate the cumulative probabilities to find the range that each
