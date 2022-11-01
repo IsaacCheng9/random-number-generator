@@ -1,12 +1,12 @@
 """
-Unit tests for the random_number_generator.py module.
+Unit tests for the random_num_gen.py module.
 """
 import decimal
 import random
 
 import pytest
 
-import next_num
+import random_num_gen
 
 
 def test_input_validation():
@@ -15,7 +15,7 @@ def test_input_validation():
     """
     random_nums = [-1, 0, 1, 2, 3]
     probabilities = [0.01, 0.3, 0.58, 0.1, 0.01]
-    random_gen = next_num.RandomGen(random_nums, probabilities)
+    random_gen = random_num_gen.RandomGen(random_nums, probabilities)
     assert random_gen.random_nums == random_nums
     assert random_gen.probabilities == [
         decimal.Decimal("0.01"),
@@ -40,7 +40,7 @@ def test_input_validation_random_nums_not_int():
     random_nums = [-1, 0, 1, 2, 3.1]
     probabilities = [0.01, 0.3, 0.58, 0.1, 0.01]
     with pytest.raises(TypeError):
-        next_num.RandomGen(random_nums, probabilities)
+        random_num_gen.RandomGen(random_nums, probabilities)
 
 
 def test_input_validation_probabilities_not_float():
@@ -50,7 +50,7 @@ def test_input_validation_probabilities_not_float():
     random_nums = [-1, 0, 1, 2, 3]
     probabilities = [0.01, 0.3, 0.58, 0.1, "0.01"]
     with pytest.raises(TypeError):
-        next_num.RandomGen(random_nums, probabilities)
+        random_num_gen.RandomGen(random_nums, probabilities)
 
 
 def test_input_validation_length_mismatch():
@@ -60,7 +60,7 @@ def test_input_validation_length_mismatch():
     random_nums = [-1, 0, 1, 2, 3]
     probabilities = [0.01, 0.3, 0.58, 0.1]
     with pytest.raises(ValueError):
-        next_num.RandomGen(random_nums, probabilities)
+        random_num_gen.RandomGen(random_nums, probabilities)
 
 
 def test_input_validation_negative_probability():
@@ -70,7 +70,7 @@ def test_input_validation_negative_probability():
     random_nums = [-1, 0, 1, 2, 3]
     probabilities = [0.01, 0.3, 0.58, 0.1, -0.01]
     with pytest.raises(ValueError):
-        next_num.RandomGen(random_nums, probabilities)
+        random_num_gen.RandomGen(random_nums, probabilities)
 
 
 def test_input_validation_probability_sum_not_one():
@@ -80,7 +80,7 @@ def test_input_validation_probability_sum_not_one():
     random_nums = [-1, 0, 1, 2, 3]
     probabilities = [0.01, 0.3, 0.58, 0.1, 0.02]
     with pytest.raises(ValueError):
-        next_num.RandomGen(random_nums, probabilities)
+        random_num_gen.RandomGen(random_nums, probabilities)
 
 
 def test_find_index_of_number_for_random_roll_boundaries():
@@ -90,7 +90,7 @@ def test_find_index_of_number_for_random_roll_boundaries():
     """
     random_nums = [1, 2, 3]
     probabilities = [0.1, 0.2, 0.7]
-    random_gen = next_num.RandomGen(random_nums, probabilities)
+    random_gen = random_num_gen.RandomGen(random_nums, probabilities)
     # Check that it returns the first index for the lowest possible roll.
     assert (
         random_gen.find_index_of_number_for_random_roll(
@@ -114,7 +114,7 @@ def test_find_index_of_number_for_random_roll_ranges():
     """
     random_nums = [1, 2, 3]
     probabilities = [0.1, 0.2, 0.7]
-    random_gen = next_num.RandomGen(random_nums, probabilities)
+    random_gen = random_num_gen.RandomGen(random_nums, probabilities)
     # Check that the first index is returned for a roll at the upper
     # boundary of the first range.
     assert (
@@ -139,7 +139,7 @@ def test_returns_values_from_number_list():
     """
     random_nums = [1, 2, 3, 4, 5, 6]
     probabilities = [0.1, 0.2, 0.3, 0.2, 0.1, 0.1]
-    random_gen = next_num.RandomGen(random_nums, probabilities)
+    random_gen = random_num_gen.RandomGen(random_nums, probabilities)
     iterations = 1000
     for _ in range(iterations):
         assert random_gen.next_num() in random_nums
@@ -152,7 +152,7 @@ def test_returns_same_results_for_same_seed():
     """
     random_nums = [1, 2, 3, 4, 5, 6]
     probabilities = [0.1, 0.2, 0.3, 0.2, 0.1, 0.1]
-    random_gen = next_num.RandomGen(random_nums, probabilities)
+    random_gen = random_num_gen.RandomGen(random_nums, probabilities)
     iterations = 1000
 
     # Seed the random number generator and get the expected results to
@@ -175,7 +175,7 @@ def test_returns_different_results_for_different_seeds():
     """
     random_nums = [1, 2, 3, 4, 5, 6]
     probabilities = [0.1, 0.2, 0.3, 0.2, 0.1, 0.1]
-    random_gen = next_num.RandomGen(random_nums, probabilities)
+    random_gen = random_num_gen.RandomGen(random_nums, probabilities)
     iterations = 1000
 
     # Seed the random number generator and get the expected results to
@@ -198,7 +198,7 @@ def test_monte_carlo_simulation():
     """
     random_nums = [1, 2, 3, 4, 5, 6]
     probabilities = [0.1, 0.2, 0.3, 0.2, 0.1, 0.1]
-    random_gen = next_num.RandomGen(random_nums, probabilities)
+    random_gen = random_num_gen.RandomGen(random_nums, probabilities)
     iterations = 100000
     samples = 100
 
