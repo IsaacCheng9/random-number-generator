@@ -7,10 +7,6 @@ import pytest
 
 import next_num
 
-# TODO: Use multiple seeds and perform +-2 SD test. Use Monte Carlo method?
-# TODO: Look into using Bayesian stats.
-# TODO: Look into performing Binomial tests with confidence intervals.
-
 
 class TestInputValidation:
     """
@@ -219,12 +215,14 @@ class TestStatisticalDistribution:
             for _ in range(iterations):
                 actual_frequencies[random_gen.next_num() - 1] += 1
 
-            # Check that the actual frequencies are within an expected range
-            # given the probabilities.
-            for i in range(len(random_nums)):
+            # Check that the actual frequencies are within 5% of the expected
+            # range given the probabilities.
+            for index in range(len(random_nums)):
                 assert (
-                    actual_frequencies[i] - expected_frequencies[i]
-                ) / expected_frequencies[i] <= 0.1
+                    abs(actual_frequencies[index] - expected_frequencies[index])
+                    / expected_frequencies[index]
+                    <= 0.05
+                )
 
 
 if __name__ == "__main__":
