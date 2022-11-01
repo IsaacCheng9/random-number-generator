@@ -5,7 +5,7 @@ import random
 from typing import List
 
 
-class RandomGen():
+class RandomGen:
     """
     A random number generator that returns a random number given a list of
     numbers and their corresponding probabilities of occurring.
