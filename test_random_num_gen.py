@@ -93,14 +93,14 @@ def test_find_index_of_number_for_random_roll_boundaries():
     random_gen = random_num_gen.RandomGen(random_nums, probabilities)
     # Check that it returns the first index for the lowest possible roll.
     assert (
-        random_gen.find_index_of_number_for_random_roll(
+        random_num_gen.find_index_of_number_for_random_roll(
             random_gen.cum_probabilities, 0.00
         )
         == 0
     )
     # Check that it returns the last index for the highest possible roll.
     assert (
-        random_gen.find_index_of_number_for_random_roll(
+        random_num_gen.find_index_of_number_for_random_roll(
             random_gen.cum_probabilities, 0.9999999999999999
         )
         == 2
@@ -118,7 +118,7 @@ def test_find_index_of_number_for_random_roll_ranges():
     # Check that the first index is returned for a roll at the upper
     # boundary of the first range.
     assert (
-        random_gen.find_index_of_number_for_random_roll(
+        random_num_gen.find_index_of_number_for_random_roll(
             random_gen.cum_probabilities, 0.09999999999999999
         )
         == 0
@@ -126,7 +126,7 @@ def test_find_index_of_number_for_random_roll_ranges():
     # Check that the second index is returned for a roll at the lower
     # boundary of the second range.
     assert (
-        random_gen.find_index_of_number_for_random_roll(
+        random_num_gen.find_index_of_number_for_random_roll(
             random_gen.cum_probabilities, 0.1
         )
         == 1

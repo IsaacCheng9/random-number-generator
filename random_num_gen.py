@@ -11,6 +11,24 @@ import random
 from typing import List
 
 
+def find_index_of_number_for_random_roll(
+    cumulative_probabilities: List[decimal.Decimal], random_roll: float
+) -> int:
+    """
+    Find the index of the number corresponding to the random roll.
+
+    Args:
+        cumulative_probabilities: List of cumulative probabilities.
+        random_roll: Random float between 0 and 1 inclusive.
+
+    Returns:
+        Index of the number corresponding to the random roll.
+    """
+    # Find the insertion point for random_roll in cumulative_probabilities.
+    index = bisect.bisect(cumulative_probabilities, random_roll)
+    return index
+
+
 class RandomGen:
     """
     A random number generator that returns a random number given a list of
@@ -53,23 +71,6 @@ class RandomGen:
         if self.cum_probabilities[-1] != 1.0:
             raise ValueError("probabilities must sum to 1.")
 
-    def find_index_of_number_for_random_roll(
-        self, cumulative_probabilities: List[decimal.Decimal], random_roll: float
-    ) -> int:
-        """
-        Find the index of the number corresponding to the random roll.
-
-        Args:
-            cumulative_probabilities: List of cumulative probabilities.
-            random_roll: Random float between 0 and 1 inclusive.
-
-        Returns:
-            Index of the number corresponding to the random roll.
-        """
-        # Find the insertion point for random_roll in cumulative_probabilities.
-        index = bisect.bisect(cumulative_probabilities, random_roll)
-        return index
-
     def next_num(self) -> int:
         """
         Generate a random number based on the probabilities provided.
@@ -82,7 +83,7 @@ class RandomGen:
         random_roll = random.random()
         # Find the index of the number whose probability range this random roll
         # fits into.
-        number_index = self.find_index_of_number_for_random_roll(
+        number_index = find_index_of_number_for_random_roll(
             self.cum_probabilities, random_roll
         )
         return self.random_nums[number_index]
