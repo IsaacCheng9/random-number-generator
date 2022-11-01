@@ -117,14 +117,14 @@ if __name__ == "__main__":
     for _ in range(ITERATIONS):
         num_counts[random_gen.next_num()] += 1
 
-    # Print the results of the random number generation.
-    print(f"Numbers: {input_random_nums}")
-    print(
-        f"Probabilities: {input_probabilities}\n\nNumbers Generated [Number: Frequency "
-        "(Proportion)]"
-    )
+    # Print the parameters and results of the random number generation.
+    print(f"Numbers: {input_random_nums}\nProbabilities: {input_probabilities}\n")
+    print("Expected Results:")
+    for i, random_num in enumerate(input_random_nums):
+        print(f"{random_num}: {int(input_probabilities[i] * ITERATIONS)} times")
+    print("\nActual Results [Number: Frequency " "(Proportion)]:")
     for input_num in input_random_nums:
         print(
             f"{input_num}: {num_counts[input_num]} times "
-            "({num_counts[input_num] / ITERATIONS})"
+            f"({num_counts[input_num] / ITERATIONS})"
         )
