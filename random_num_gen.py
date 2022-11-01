@@ -19,7 +19,6 @@ class RandomGen:
             probabilities: Probability of each number being returned by the
                 random number generator. Example: [0.01, 0.3, 0.58, 0.1, 0.01]
         """
-        # TODO: Consider adding a flag to sacrifice floating point precision for speed (using numpy with ints instead of decimal).
         if len(random_nums) != len(probabilities):
             raise ValueError("Length of random_nums and probabilities must be equal.")
 
@@ -74,7 +73,6 @@ class RandomGen:
             period, it should return the numbers roughly with the initialised
             probabilities.
         """
-        # TODO: Look into how this function works.
         random_roll = random.random()
         # Find the index of the number whose probability range this random roll
         # fits into.
