@@ -105,5 +105,8 @@ if __name__ == "__main__":
         f"Probabilities: {input_probabilities}\n\nNumbers Generated [Number: Frequency "
         "(Proportion)]"
     )
-    for num in input_random_nums:
-        print(f"{num}: {num_counts[num]} times ({num_counts[num] / ITERATIONS})")
+    for input_num in input_random_nums:
+        print(
+            f"{input_num}: {num_counts[input_num]} times "
+            "({num_counts[input_num] / ITERATIONS})"
+        )
