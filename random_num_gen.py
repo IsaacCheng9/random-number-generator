@@ -72,9 +72,9 @@ class RandomGen:
         cumulative = decimal.Decimal(0.00)
         for probability in probabilities:
             if probability < 0:
-                raise ValueError("probabilities must be non-negative.")
+                raise ValueError("Probabilities must be non-negative.")
             if not isinstance(probability, float):
-                raise TypeError("probabilities must be a list of floats.")
+                raise TypeError("Probabilities must be a list of floats.")
 
             # Convert probabilities into decimal floating point arithmetic for
             # precision to prevent floating point arithmetic errors.
@@ -84,7 +84,7 @@ class RandomGen:
             self.cum_probabilities.append(cumulative)
 
         if self.cum_probabilities[-1] != 1.0:
-            raise ValueError("probabilities must sum to 1.")
+            raise ValueError("Probabilities must sum to 1.")
 
     def next_num(self) -> int:
         """
