@@ -73,6 +73,8 @@ class RandomGen:
         for probability in probabilities:
             if probability < 0:
                 raise ValueError("Probabilities must be non-negative.")
+            if probability > 1.0:
+                raise ValueError("Probabilities cannot be greater than 1.0.")
             if not isinstance(probability, float):
                 raise TypeError("Probabilities must be a list of floats.")
 

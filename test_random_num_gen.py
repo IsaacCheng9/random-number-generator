@@ -73,6 +73,16 @@ def test_input_validation_negative_probability():
         random_num_gen.RandomGen(random_nums, probabilities)
 
 
+def test_input_validation_larger_than_one_probability():
+    """
+    Check that probabilities cannot be greater than 1.0.
+    """
+    random_nums = [-1, 0, 1, 2, 3]
+    probabilities = [0.01, 1.01, 0.58, 0.1, -0.01]
+    with pytest.raises(ValueError):
+        random_num_gen.RandomGen(random_nums, probabilities)
+
+
 def test_input_validation_probability_sum_not_one():
     """
     Check that probabilities must sum to 1.
