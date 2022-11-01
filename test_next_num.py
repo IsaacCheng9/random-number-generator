@@ -1,11 +1,12 @@
+import collections
 import decimal
 import random
+import statistics
 
 import pytest
 
 import next_num
 
-# TODO: Set a fixed seed to ensure that random number generation is deterministic.
 # TODO: Use multiple seeds and perform +-2 SD test. Use Monte Carlo method?
 # TODO: Look into using Bayesian stats.
 # TODO: Look into performing Binomial tests with confidence intervals.
@@ -146,7 +147,7 @@ class TestValidOutputs:
         random_nums = [1, 2, 3, 4, 5, 6]
         probabilities = [0.1, 0.2, 0.3, 0.2, 0.1, 0.1]
         random_gen = next_num.RandomGen(random_nums, probabilities)
-        iterations = 10000
+        iterations = 1000
         for _ in range(iterations):
             assert random_gen.next_num() in random_nums
 
@@ -193,6 +194,37 @@ class TestValidOutputs:
         for increment in range(1, samples + 1):
             random.seed(10 + increment)
             assert [random_gen.next_num() for _ in range(iterations)] != expected_res
+
+
+class TestStatisticalDistribution:
+    def test_monte_carlo_simulation(self):
+        """
+        Check that the number generator returns numbers with frequencies that
+        are within an expected range given the probabilities.
+        """
+        random_nums = [1, 2, 3, 4, 5, 6]
+        probabilities = [0.1, 0.2, 0.3, 0.2, 0.1, 0.1]
+        random_gen = next_num.RandomGen(random_nums, probabilities)
+        iterations = 100000
+        samples = 100
+
+        # Get the expected frequencies of the numbers given the probabilities.
+        expected_frequencies = [prob * iterations for prob in probabilities]
+
+        for _ in range(samples):
+            random.seed()
+            # Get the actual frequencies of the numbers returned by the number
+            # generator.
+            actual_frequencies = [0] * len(random_nums)
+            for _ in range(iterations):
+                actual_frequencies[random_gen.next_num() - 1] += 1
+
+            # Check that the actual frequencies are within an expected range
+            # given the probabilities.
+            for i in range(len(random_nums)):
+                assert (
+                    actual_frequencies[i] - expected_frequencies[i]
+                ) / expected_frequencies[i] <= 0.1
 
 
 if __name__ == "__main__":
